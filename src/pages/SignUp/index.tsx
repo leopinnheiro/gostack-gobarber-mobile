@@ -22,6 +22,9 @@ const SignUp: React.FC = () => {
   const navitagion = useNavigation();
   const formRef = useRef<FormHandles>(null);
 
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -44,19 +47,37 @@ const SignUp: React.FC = () => {
                 console.log(data);
               }}
             >
-              <Input name="name" icon="user" placeholder="Digite seu nome" />
-              <Input name="email" icon="mail" placeholder="Digite seu e-mail" />
               <Input
+                autoCapitalize="words"
+                name="name"
+                icon="user"
+                placeholder="Digite seu nome"
+                returnKeyType="next"
+                onSubmitEditing={() => emailInputRef.current?.focus()}
+              />
+              <Input
+                ref={emailInputRef}
+                autoCorrect={false}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                name="email"
+                icon="mail"
+                placeholder="Digite seu e-mail"
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+              />
+              <Input
+                ref={passwordInputRef}
+                secureTextEntry
+                textContentType="newPassword"
                 name="password"
                 icon="lock"
                 placeholder="Digite uma senha segura"
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
               />
             </Form>
-            <Button
-              onPress={() => {
-                formRef.current?.submitForm();
-              }}
-            >
+            <Button onPress={() => formRef.current?.submitForm()}>
               Cadastrar
             </Button>
           </Container>
