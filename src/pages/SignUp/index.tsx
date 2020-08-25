@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
+import api from '../../services/api';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
@@ -52,17 +53,14 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
 
-      /*
-        await api.post('/users', data);
+      await api.post('/users', data);
 
-        addToast({
-          type: 'success',
-          title: 'Cadastro realizado',
-          description: 'Você ja pode fazer seu logon no GoBarber!',
-        });
+      Alert.alert(
+        'Cadastro realizado',
+        'Você ja pode fazer seu logon no GoBarber!',
+      );
 
-        history.push('/');
-        */
+      navitagion.goBack();
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
